@@ -12,8 +12,7 @@ class CacheDictionary(CacheObject):
         rec = self._data.get(label, {})
 
         if not rec:
-            ip_parts = self._ip_generator.next().split('.')
-            rec['ip'] = '.'.join(ip_parts)
+            rec['addr'] = self._n_generator.next()
 
         rec['time'] = time.time()
         self._data.update({label: rec})
@@ -22,12 +21,14 @@ class CacheDictionary(CacheObject):
         pass
 
     def get_addr_by_name(self, value):
-        return self._data.get(value).get('ip')
+        return [self._data.get(value).get('addr')]
 
     def get_name_by_addr(self, value):
+        out = []
         for k, v in self._data.items():
-            if v['ip'] == value:
-                return k
+            if v['addr'] == value:
+                out.append(k)
+        return out
 
     def prune_stale(self):
         to_del = []

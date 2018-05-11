@@ -49,7 +49,7 @@ class CacheDatabase(CacheObject):
             p = {'id': rec['id'], 'date': time.time()}
         else:
             q = QUERY_ADD_ENTRY
-            p = {'addr': self._ip_generator.next(), 'name': name, 'date': time.time()}
+            p = {'addr': self._n_generator.next(), 'name': name, 'date': time.time()}
 
         self._cur.execute(q, p)
         self._conn.commit()
@@ -61,18 +61,28 @@ class CacheDatabase(CacheObject):
 
     def get_name_by_addr(self, addr, expired=0):
         self._cur.execute(QUERY_GET_BY_ADDR, {'addr': addr, 'expired': expired})
-        return self._cur.fetchall()  # if expired=1 there may be many records
+
+        out = []
+        for rec in self._cur:
+            out.append(rec['id'])
+
+        return out
 
     def get_addr_by_name(self, name, expired=0):
         self._cur.execute(QUERY_GET_BY_NAME, {'name': name, 'expired': expired})
-        return self._cur.fetchall()  # if expired=1 there may be many records
+
+        out = []
+        for rec in self._cur:
+            out.append(rec['addr'])
+
+        return out
 
     def prune_stale(self):
         self._cur.execute(QUERY_GET_BY_EXPIRED, {'expired': 0})
-        ids = set()
+        ids = []
 
         for row in self._cur:
-            ids.add((row['id'],))  # executemany() seq_of_parameters should be a tuple (1-tuple in this case)
+            ids.append((row['id'],))  # executemany() seq_of_parameters should be a tuple (1-tuple in this case)
 
         if self.remove_stale:
             q = QUERY_EXPIRE_DELETE_BY_ID
