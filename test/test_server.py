@@ -3,7 +3,7 @@ import socket
 import unittest
 
 from fake_dns.const import *
-from fake_dns.models import FakeCache, _get_ip_ints
+from fake_dns.models import FakeCache, get_ip_as_ints
 from fake_dns.server import FakeDNSServer, FakeResolver
 
 
@@ -39,7 +39,7 @@ class TestFakeDNSServer(unittest.TestCase):
 
         self.assertEqual(s.port, self.PORT)
         self.assertEqual(s.addr, DEFAULT_LISTEN_ADDR)
-        self.assertEqual(s.addr_range, _get_ip_ints(DEFAULT_ADDR_RANGE))
+        self.assertEqual(s.addr_range, get_ip_as_ints(DEFAULT_ADDR_RANGE))
         self.assertEqual(s.duration, DEFAULT_CACHE_DURATION)
 
     # noinspection PyPropertyAccess
@@ -53,7 +53,7 @@ class TestFakeDNSServer(unittest.TestCase):
 
         new_addr_range = '192.168.0.0-192.168.0.255'
         s.addr_range = new_addr_range
-        self.assertEqual(s.addr_range, _get_ip_ints(new_addr_range))
+        self.assertEqual(s.addr_range, get_ip_as_ints(new_addr_range))
 
         with self.assertRaises(AttributeError):
             s.cache = {}
