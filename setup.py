@@ -1,5 +1,3 @@
-#!/usr/bin./env python
-
 from setuptools import find_packages, setup
 
 
@@ -11,12 +9,11 @@ setup(
     packages=find_packages(),
     install_requires=[
         'dnslib',
-        'enum34',
         'ipaddress',
     ],
     entry_points={
         'console_scripts': [
-            'delirium = delirium.delirium:main',
+            'delirium = delirium.apps:cli_app',
         ],
     }
 )
