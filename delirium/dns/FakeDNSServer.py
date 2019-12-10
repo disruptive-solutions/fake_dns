@@ -1,14 +1,16 @@
-from dns import FakeResolver
+from dns.fakeresolver import FakeResolver
 from const import *
+from models import database
+from dnslib.server import BaseResolver, DNSServer
 
 class FakeDNSServer(object):
-    #import const
+
     def __init__(self, addr=DEFAULT_LISTEN_ADDR, port=DEFAULT_LISTEN_PORT, duration=DEFAULT_CACHE_DURATION,
                  ip_range=DEFAULT_ADDR_RANGE, cache_type=CACHE_TYPE.DICTIONARY, cache_path=DEFAULT_DB_PATH):
         self._addr = addr
         self._port = port
 
-        self._cache = create_cache(ip_range, duration, cache_type, cache_path)
+        self._cache = database.create_cache(ip_range, duration, cache_type, cache_path)
         self._resolver = FakeResolver(self._cache)
         self._dns_server = DNSServer(self._resolver, self._addr, self._port)
 

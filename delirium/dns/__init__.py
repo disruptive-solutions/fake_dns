@@ -1,2 +1,2 @@
-from dns.FakeDNSServer import FakeDNSServer
-from dns.FakeResolver import FakeResolver
+from dns.fakednsserver import FakeDNSServer
+from dns.fakeresolver import FakeResolver

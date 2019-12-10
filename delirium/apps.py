@@ -27,3 +27,6 @@ def cli_app():
         pass
     finally:
         s.stop()
+
+if __name__ == "__main__":
+    cli_app()
