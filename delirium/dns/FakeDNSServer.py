@@ -1,4 +1,4 @@
-from dns.fakeresolver import FakeResolver
+from .fakeresolver import FakeResolver
 from const import *
 from models import database
 from dnslib.server import BaseResolver, DNSServer
