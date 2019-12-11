@@ -1,2 +1,2 @@
-from dns.fakednsserver import FakeDNSServer
-from dns.fakeresolver import FakeResolver
+from delirium.dns.fakednsserver import FakeDNSServer
+from delirium.dns.fakeresolver import FakeResolver

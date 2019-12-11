@@ -2,7 +2,7 @@ import sqlite3
 import time
 
 from dnslib.server import BaseResolver, DNSServer
-from const import *
+from delirium.const import *
 from models.dictionary import CacheDictionary
 from .cache import CacheObject
 
