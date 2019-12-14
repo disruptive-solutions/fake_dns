@@ -5,8 +5,8 @@ import unittest
 from delirium.const import *
 from delirium.models.cache import get_addr_range
 from delirium.models.dictionary import CacheDictionary
-from delirium.dns.fakednsserver import FakeDNSServer
-from delirium.dns.fakeresolver import FakeResolver
+from dns.fakednsserver import FakeDNSServer
+from dns.fakeresolver import FakeResolver
 
 def suite():
     server_suite = unittest.TestLoader().loadTestsFromTestCase(TestFakeDNSServer)

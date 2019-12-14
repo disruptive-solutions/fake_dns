@@ -3,7 +3,7 @@ import time
 
 from dnslib.server import BaseResolver, DNSServer
 from delirium.const import *
-from models.dictionary import CacheDictionary
+from dns.models.dictionary import CacheDictionary
 from .cache import CacheObject
 
 

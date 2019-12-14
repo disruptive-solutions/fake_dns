@@ -1,6 +1,6 @@
 from .fakeresolver import FakeResolver
-from const import *
-from models import database
+from delirium.const import *
+from dns.models import database
 from dnslib.server import BaseResolver, DNSServer
 
 class FakeDNSServer(object):

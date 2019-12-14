@@ -1,5 +1,6 @@
 from const import *
 from dns import FakeDNSServer
+from tls import *
 
 
 def cli_app():
