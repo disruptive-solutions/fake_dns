@@ -7,4 +7,3 @@ script:
   - python -m unittest discover
 notifications:
     webhooks: https://www.travisbuddy.com/
-    
