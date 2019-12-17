@@ -10,6 +10,7 @@ setup(
     install_requires=[
         'dnslib',
         'ipaddress',
+        'click',
     ],
     entry_points={
         'console_scripts': [
