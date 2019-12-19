@@ -16,9 +16,8 @@ def delirium():
 @click.option('-a','--addr-pool', default=DEFAULT_ADDR_RANGE, help='Range of IP addresses to randomly generate')
 @click.option('-d','--db-path', default=DEFAULT_DB_PATH ,help='Path to sqlite3 database')
 def dns(laddr, lport, time, addr_pool, db_path):
-    cache_type = CACHE_TYPE.DATABASE
     click.echo('Running Delirium DNS Server')
-    s = FakeDNSServer(laddr, lport, time, addr_pool, cache_type, db_path)
+    s = FakeDNSServer(laddr, lport, time, addr_pool, CACHE_TYPE.DATABASE, db_path)
     try:
         s.start()
     except KeyboardInterrupt:
