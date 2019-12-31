@@ -9,7 +9,7 @@ from delirium.dns.models.database import CacheDatabase
 
 def suite():
     cache_db_suite = unittest.TestLoader().loadTestsFromTestCase(TestCacheDatabase)
-    return unittest.TestSuite([cache_dict_suite, cache_db_suite])
+    return unittest.TestSuite(cache_db_suite)
 
 
 class TestCacheDatabase(unittest.TestCase):
