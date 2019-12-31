@@ -10,4 +10,3 @@ DEFAULT_LISTEN_PORT = 53
 # noinspection PyPep8Naming
 class CACHE_TYPE(Enum):
     DATABASE = 1
-    DICTIONARY = 2

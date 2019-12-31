@@ -8,7 +8,7 @@ from .models import database
 class FakeDNSServer(object):
 
     def __init__(self, addr=DEFAULT_LISTEN_ADDR, port=DEFAULT_LISTEN_PORT, duration=DEFAULT_CACHE_DURATION,
-                 ip_range=DEFAULT_ADDR_RANGE, cache_type=CACHE_TYPE.DICTIONARY, cache_path=DEFAULT_DB_PATH):
+                 ip_range=DEFAULT_ADDR_RANGE, cache_type=CACHE_TYPE.DATABASE, cache_path=DEFAULT_DB_PATH):
         self._addr = addr
         self._port = port
 

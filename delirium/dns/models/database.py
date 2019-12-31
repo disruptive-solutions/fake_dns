@@ -5,7 +5,6 @@ from os import path
 from dnslib.server import BaseResolver, DNSServer
 
 from delirium.const import *
-from .dictionary import CacheDictionary
 from .cache import CacheObject
 
 
