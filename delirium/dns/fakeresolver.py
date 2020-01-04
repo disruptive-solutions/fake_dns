@@ -1,6 +1,6 @@
 from dnslib.server import BaseResolver
-from dnslib import *
-import ipaddress
+from dnslib import RCODE
+from dnslib import QTYPE
 
 class FakeResolver(BaseResolver):
 
