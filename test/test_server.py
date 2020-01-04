@@ -5,7 +5,7 @@ import unittest
 from delirium.const import *
 from delirium.dns.fakednsserver import FakeDNSServer
 from delirium.dns.fakeresolver import FakeResolver
-from delirium.dns.models.cache import get_addr_range
+from delirium.dns.cache import get_addr_range
 
 
 def suite():

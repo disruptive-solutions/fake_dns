@@ -3,8 +3,8 @@ import time
 import unittest
 
 from delirium.const import *
-from delirium.dns.models.cache import get_addr_range
-from delirium.dns.models.database import CacheDatabase
+from delirium.dns.cache import get_addr_range
+from delirium.dns.cache import CacheDatabase
 
 
 def suite():

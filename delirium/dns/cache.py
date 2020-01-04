@@ -1,11 +1,15 @@
+import itertools
+import socket
+import struct
+import ipaddress
 import sqlite3
 import time
 from os import path
 
+from abc import ABCMeta, abstractmethod
 from dnslib.server import BaseResolver, DNSServer
 
-from delirium.const import *
-from .cache import CacheObject
+import delirium.const
 
 
 QUERY_CREATE_TABLE = """CREATE TABLE IF NOT EXISTS cache (
@@ -24,17 +28,72 @@ QUERY_GET_BY_ADDR = "SELECT * FROM cache WHERE addr = :addr AND expired = :expir
 QUERY_GET_BY_NAME = "SELECT * FROM cache WHERE name = :name AND expired = :expired;"
 QUERY_UPDATE_DATE_BY_ID = "UPDATE cache SET date = :date WHERE id = :id;"
 
+def get_addr_range(value):
+    """Converts a <ip>-<ip> string to integers for random.randrange()"""
+
+    values = value.split('-')
+    s_int = struct.unpack('!L', socket.inet_aton(values[0]))[0]
+    e_int = struct.unpack('!L', socket.inet_aton(values[1]))[0]
+    return s_int, e_int
+
+
+def n_generator(start, end):
+    for i in itertools.cycle(range(start, end + 1)):
+        yield i
+
+class CacheObject:
+    __metaclass__ = ABCMeta
+
+    def __init__(self, addr_range, duration):
+        self._addr_range = get_addr_range(addr_range)
+        self._duration = duration
+        self._n_generator = n_generator(*self._addr_range)
+
+    @property
+    def duration(self):
+        return self._duration
+
+    @duration.setter
+    def duration(self, value):
+        self._duration = value
+
+    @property
+    def addr_range(self):
+        return self._addr_range
+
+    @addr_range.setter
+    def addr_range(self, value):
+        self._addr_range = get_addr_range(value)
+
+    @staticmethod
+    def __socket_aton(value):
+        return struct.unpack('!L', socket.inet_aton(value))[0]
+
+    @abstractmethod
+    def add_record(self, label):
+        pass
+
+    @abstractmethod
+    def close(self):
+        pass
+
+    @abstractmethod
+    def get_addr_by_name(self, value):
+        pass
+
+    @abstractmethod
+    def get_name_by_addr(self, value):
+        pass
+
+    @abstractmethod
+    def prune_stale(self):
+        pass
 
 def init_db(path):
     c = sqlite3.connect(path)
     c.row_factory = sqlite3.Row
     c.execute(QUERY_CREATE_TABLE)
     return c
-
-def create_cache(addr_range, duration, path=DEFAULT_DB_PATH):
-    """Provides a caching mechanism for the dnslib.DNSServer"""
-
-    return CacheDatabase(addr_range, duration, path)
 
 
 class CacheDatabase(CacheObject):

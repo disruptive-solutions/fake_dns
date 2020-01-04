@@ -2,8 +2,7 @@ from dnslib.server import BaseResolver, DNSServer
 
 from delirium.const import *
 from .fakeresolver import FakeResolver
-from .models import database
-
+from .cache import CacheDatabase
 
 class FakeDNSServer(object):
 
@@ -12,7 +11,7 @@ class FakeDNSServer(object):
         self._addr = addr
         self._port = port
 
-        self._cache = database.create_cache(ip_range, duration, cache_path)
+        self._cache = CacheDatabase(ip_range, duration, cache_path)
         self._resolver = FakeResolver(self._cache)
         self._dns_server = DNSServer(self._resolver, self._addr, self._port)
 
