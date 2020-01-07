@@ -6,7 +6,6 @@ import sqlite3
 import time
 from os import path
 
-from abc import ABCMeta, abstractmethod
 from dnslib.server import BaseResolver, DNSServer
 
 import delirium.const
@@ -41,53 +40,6 @@ def n_generator(start, end):
     for i in itertools.cycle(range(start, end + 1)):
         yield i
 
-class CacheObject:
-    __metaclass__ = ABCMeta
-
-    def __init__(self, addr_range, duration):
-        self._addr_range = get_addr_range(addr_range)
-        self._duration = duration
-        self._n_generator = n_generator(*self._addr_range)
-
-    @property
-    def duration(self):
-        return self._duration
-
-    @duration.setter
-    def duration(self, value):
-        self._duration = value
-
-    @property
-    def addr_range(self):
-        return self._addr_range
-
-    @addr_range.setter
-    def addr_range(self, value):
-        self._addr_range = get_addr_range(value)
-
-    @staticmethod
-    def __socket_aton(value):
-        return struct.unpack('!L', socket.inet_aton(value))[0]
-
-    @abstractmethod
-    def add_record(self, label):
-        pass
-
-    @abstractmethod
-    def close(self):
-        pass
-
-    @abstractmethod
-    def get_addr_by_name(self, value):
-        pass
-
-    @abstractmethod
-    def get_name_by_addr(self, value):
-        pass
-
-    @abstractmethod
-    def prune_stale(self):
-        pass
 
 def init_db(path):
     c = sqlite3.connect(path)
@@ -96,15 +48,47 @@ def init_db(path):
     return c
 
 
-class CacheDatabase(CacheObject):
+class CacheDatabase:
     def __init__(self, addr_range, duration, path):
-        super(CacheDatabase, self).__init__(addr_range, duration)
         self.remove_stale = False
         self._path = path
         self._conn = init_db(self._path)
         self._cur = self._conn.cursor()
+        self._addr_range = get_addr_range(addr_range)
+        self._duration = duration
+        self._n_generator = n_generator(*self._addr_range)
 
-    @property
+    def duration(self):
+        return self._duration
+
+    def duration(self, value):
+        self._duration = value
+
+    def addr_range(self):
+        return self._addr_range
+
+    def addr_range(self, value):
+        self._addr_range = get_addr_range(value)
+
+    def __socket_aton(value):
+        return struct.unpack('!L', socket.inet_aton(value))[0]
+
+    def add_record(self, label):
+        pass
+
+    def close(self):
+        pass
+
+    def get_addr_by_name(self, value):
+        pass
+
+    def get_name_by_addr(self, value):
+        pass
+
+    def prune_stale(self):
+        pass
+
+#    @property
     def path(self):
         return self._path
 
