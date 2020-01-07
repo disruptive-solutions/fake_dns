@@ -58,37 +58,47 @@ class CacheDatabase:
         self._duration = duration
         self._n_generator = n_generator(*self._addr_range)
 
+    @property
     def duration(self):
         return self._duration
 
+    @duration.setter
     def duration(self, value):
         self._duration = value
 
+    @property
     def addr_range(self):
         return self._addr_range
 
+    @addr_range.setter
     def addr_range(self, value):
         self._addr_range = get_addr_range(value)
 
+    @staticmethod
     def __socket_aton(value):
         return struct.unpack('!L', socket.inet_aton(value))[0]
 
+    @staticmethod
     def add_record(self, label):
         pass
 
+    @staticmethod
     def close(self):
         pass
 
+    @staticmethod
     def get_addr_by_name(self, value):
         pass
 
+    @staticmethod
     def get_name_by_addr(self, value):
         pass
 
+    @staticmethod
     def prune_stale(self):
         pass
 
-#    @property
+    @property
     def path(self):
         return self._path
 
