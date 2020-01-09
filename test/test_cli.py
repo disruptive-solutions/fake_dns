@@ -1,9 +1,6 @@
 import pytest
-from os import getpid
-from os import kill
 from time import sleep
 import threading
-import subprocess
 
 from click.testing import CliRunner
 
