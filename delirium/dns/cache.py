@@ -78,26 +78,6 @@ class CacheDatabase:
     def __socket_aton(value):
         return struct.unpack('!L', socket.inet_aton(value))[0]
 
-    @staticmethod
-    def add_record(self, label):
-        pass
-
-    @staticmethod
-    def close(self):
-        pass
-
-    @staticmethod
-    def get_addr_by_name(self, value):
-        pass
-
-    @staticmethod
-    def get_name_by_addr(self, value):
-        pass
-
-    @staticmethod
-    def prune_stale(self):
-        pass
-
     @property
     def path(self):
         return self._path
